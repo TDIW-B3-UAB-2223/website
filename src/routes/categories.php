@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-    $categories = ["corda", "vent", "percussió", "teclat"];
+    $categories = $database->getCategories();
 ?>
 <html lang=cat>
     <head>
@@ -12,7 +12,11 @@
         <h1>Categories</h1>
         <ul>
             <?php foreach ($categories as $category) { ?>
-                <li><a href="index.php?accio=mostrar-categoria&categoria=<?php echo $category; ?>"><?php echo $category; ?></a></li>
+                <li><a href="index.php?accio=mostrar-categoria&categoria=<?php
+                    echo $category;
+                ?>">
+                    <?php echo $category; ?>
+                </a></li>
             <?php } ?>
     </body>
 </html>

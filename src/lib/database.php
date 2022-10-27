@@ -2,6 +2,45 @@
     class DatabaseConnection {
         private static $instance = null;
         private $conn = null;
+
+        private $dataset = [
+            "categories" => [
+                "corda",
+                "vent",
+                "percussió",
+                "teclat"
+            ],
+            "products" => [
+                [
+                    "id" => 1,
+                    "name" => "Violí",
+                    "category" => "corda",
+                    "description" => "Un violí",
+                    "price" => 1000
+                ],
+                [
+                    "id" => 2,
+                    "name" => "Trompeta",
+                    "category" => "vent",
+                    "description" => "Una trompeta",
+                    "price" => 2000
+                ],
+                [
+                    "id" => 3,
+                    "name" => "Tambor",
+                    "category" => "percussió",
+                    "description" => "Un tambor",
+                    "price" => 3000
+                ],
+                [
+                    "id" => 4,
+                    "name" => "Piano",
+                    "category" => "teclat",
+                    "description" => "Un piano",
+                    "price" => 4000
+                ]
+            ]
+        ];
         
         public static function getInstance() {
             if (self::$instance == null) {
@@ -15,22 +54,32 @@
             $actualPort = $port ?? 5432;
     
             try {
-                $conn = new PDO(
+                $this->conn = new PDO(
                     "pgsql:host=$server;port=$actualPort;dbname=$db;charset=UTF8",
                     $user,
                     $pass
                 );
                 
-                $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+                $this->conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     
             } catch (PDOException $e){
                 echo "Error: " . $e->getMessage();
             }
-            $conn = $connection;
+            $this->conn = $connection;
         }
 
-        public function getConection() {
-            return $this->conn;
+        // Stub for now
+        public function getCategories() {
+            return $this->dataset["categories"];
+        }
+
+        public function getProducts($category) {
+            return array_filter(
+                $this->dataset["products"],
+                function($product) use ($category) {
+                    return $product["category"] == $category;
+                }
+            );
         }
     }
 
