@@ -20,7 +20,7 @@ jobs:
         - name: Run PHPUnit tests
           uses: php-actions/phpunit@v3
           with:
-            configuration: test/phpunit.xml
+            configuration: tests/phpunit.xml
             args: --teamcity
           env:
             XDEBUG_MODE: coverage
