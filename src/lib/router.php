@@ -2,23 +2,23 @@
     
     class Route {
         private $path;
-        private $uses_db;
+        private $usesDB;
 
-        public function __construct(string $path, bool $uses_db = false) {
+        public function __construct(string $path, bool $usesDB = false) {
             $this->path = $path;
-            $this->uses_db = $uses_db;
+            $this->usesDB = $usesDB;
         }
 
-        function get_uses_db() {
-            return $this->uses_db;
+        public function getUsesDB() {
+            return $this->usesDB;
         }
 
-        function get_path() {
+        public function getPath() {
             return $this->path;
         }
     }
 
-    function get_router() {
+    function getRouter() {
         return [
             "llistar-categories" => new Route("categories.php", true),
             "portada" => new Route("index.php", true),
@@ -26,4 +26,3 @@
         ];
     }
 
-?>
