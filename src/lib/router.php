@@ -23,7 +23,8 @@
             "llistar-categories" => new Route("categories.php", true),
             "portada" => new Route("index.php", true),
             "404" => new Route("404.php"),
-            "llistar-productes" => new Route("productes.php", true)
+            "llistar-productes" => new Route("productes.php", true),
+            "info-productes" => new Route("info_producte.php", true)
         ];
     }
 

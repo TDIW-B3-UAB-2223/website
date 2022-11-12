@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\lib",
+    "\\src\\resources",
+    "\\src\\routes"
   ],
+  "SelectedNode": "\\src\\lib\\product.php",
   "PreviewInSolutionExplorer": false
 }

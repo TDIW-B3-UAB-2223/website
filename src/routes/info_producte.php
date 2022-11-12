@@ -12,6 +12,9 @@
     <body>
         <img src="../resources/img/<?php echo $producte['id'];?>.png" width="300" height="300" />  
         <br />
-        <?php  echo $producte['descripcio'];  ?>
+        <?php  echo $producte['nom'];
+               echo $producte['descripcio'];
+               echo $producte['preu'];
+        ?>
     </body>
 </html>
