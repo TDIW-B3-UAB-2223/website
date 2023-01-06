@@ -22,6 +22,7 @@
             
             pg_prepare($this->conn, "getCategory", "SELECT * FROM category WHERE slug = $1;");
             pg_prepare($this->conn, "getProduct", "SELECT * FROM product WHERE id = $1;");
+            pg_prepare($this->conn, "getUser", "SELECT * FROM users WHERE slug = $1;");
         }
 
         public function getCategories(string|null $category): array {
@@ -89,4 +90,37 @@
             }
             return $parents;
         }
+    
+
+    public function createUser(
+        string $name,
+        string $pass,
+        string $email,
+        string $address,
+        string $city,
+        string $postalCode
+    ){
+        $sql = "INSERT INTO Usuari(name, password, email, address, city, postalCode)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING ID;";
+        pg_prepare($this->conn, "createUser", $sql);
+        $queryResult = pg_execute(
+            $this->conn,
+            "createUser",
+            [$name, password_hash($pass, PASSWORD_DEFAULT), $email, $address, $city, $postalCode]
+        );
+        return pg_fetch_all($queryResult);
     }
+
+    public function getUser(int $id) {
+        $queryResult = pg_execute($this->conn, "getUser", [$id]);
+        $result = pg_fetch_all($queryResult);
+        return $result[0];
+    }
+
+    public function getUserSafe(int $id) {
+        $queryResult = pg_execute($this->conn, "getUser", [$id]);
+        $result = pg_fetch_all($queryResult);
+        unset($result["password"]);
+        return $result;
+    }
+}
