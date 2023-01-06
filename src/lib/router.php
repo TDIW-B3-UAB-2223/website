@@ -22,7 +22,8 @@
         return [
             "llistar-categories" => new Route("categories.php", true),
             "mostrar-categoria" => new Route("categoria.php", true),
-            "portada" => new Route("index.php", true),
+            "mostrar-producte" => new Route("producte.php", true),
+            "portada" => new Route("index.php"),
             "404" => new Route("404.php")
         ];
     }

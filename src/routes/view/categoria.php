@@ -6,7 +6,11 @@
     </head>
     <body>
         <h1><?php echo $categoria["name"] ?></h1>
-        Child of  <?php echo implode("/", array_reverse($categoria["parents"])) ?>
+        Child of <?php foreach ($categoria["parents"] as $p): ?>
+            / <a href="index.php?accio=mostrar-categoria&categoria=<?php echo $p["slug"];?>">
+                <?php echo $p["name"]; ?>
+            </a> 
+        <?php endforeach ?>
         <h2>Sub-Categories</h2>
         <ul>
             <?php foreach ($categories as $subcategory) { ?>
@@ -16,5 +20,16 @@
                     <?php echo $subcategory["name"]; ?>
                 </a></li>
             <?php } ?>
+        </ul>
+        <h2>Products</h2>
+        <ul>
+            <?php foreach ($products as $product) { ?>
+                <li><a href="index.php?accio=mostrar-producte&producte=<?php
+                    echo $product["id"];
+                ?>">
+                    <?php echo $product["name"]; ?>
+                </a></li>
+            <?php } ?>
+        </ul>
     </body>
 </html>

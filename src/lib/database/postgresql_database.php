@@ -22,7 +22,8 @@
             
             pg_prepare($this->conn, "getCategory", "SELECT * FROM category WHERE slug = $1;");
             pg_prepare($this->conn, "getProduct", "SELECT * FROM product WHERE id = $1;");
-            pg_prepare($this->conn, "getUser", "SELECT * FROM users WHERE slug = $1;");
+            pg_prepare($this->conn, "getUser", "SELECT * FROM users WHERE id = $1;");
+            pg_prepare($this->conn, "getCategorySimple", "SELECT slug, name FROM category WHERE slug = $1;");
         }
 
         public function getCategories(string|null $category): array {
@@ -49,15 +50,26 @@
 
         public function getProduct(int $id): array {
             $queryResult = pg_execute($this->conn, "getProduct", [$id]);
-            $result = pg_fetch_all($queryResult);
+            $result = pg_fetch_all($queryResult)[0];
             $result["parents"] = $this->getAllParentsOfProduct($result["id"]);
+            $result["parents"] = array_map([$this, 'fetchSimpleCategory'], $result["parents"]);
+            $result["price"] = $result["price"] / 100;
             return $result;
         }
 
-        public function getCategory(string $slug): array {
+        private function fetchSimpleCategory(string $slug) {
+            $queryResult = pg_execute($this->conn, "getCategorySimple", [$slug]);
+            return pg_fetch_all($queryResult)[0];
+        }
+
+        public function getCategory(string $slug) {
             $queryResult = pg_execute($this->conn, "getCategory", [$slug]);
             $result = pg_fetch_all($queryResult)[0];
+            if ($result == null) {
+                return null;
+            }
             $result["parents"] = $this->getAllParentsOfCategory($result["slug"]);
+            $result["parents"] = array_map([$this, 'fetchSimpleCategory'], $result["parents"]);
             return $result;
         }
 
