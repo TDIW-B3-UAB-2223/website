@@ -21,6 +21,7 @@
     function getRouter() {
         return [
             "llistar-categories" => new Route("categories.php", true),
+            "mostrar-categoria" => new Route("categoria.php", true),
             "portada" => new Route("index.php", true),
             "404" => new Route("404.php")
         ];

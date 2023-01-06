@@ -8,5 +8,6 @@
     <body>
         <h1>Benvingut a la pàgina principal</h1>
         <p>En aquesta pàgina es mostra la informació principal de la web.</p>
+        <p>Per veure la llista de categories, <a href="index.php?accio=mostrar-categories">clica aquí</a>.</p>
     </body>
 </html>

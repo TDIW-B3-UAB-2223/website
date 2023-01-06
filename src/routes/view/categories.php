@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<?php
-    $categories = $database->getCategories();
-?>
 <html lang=cat>
     <head>
         <meta charset = "UTF-8" />
@@ -13,9 +9,9 @@
         <ul>
             <?php foreach ($categories as $category) { ?>
                 <li><a href="index.php?accio=mostrar-categoria&categoria=<?php
-                    echo $category;
+                    echo $category["slug"];
                 ?>">
-                    <?php echo $category; ?>
+                    <?php echo $category["name"]; ?>
                 </a></li>
             <?php } ?>
     </body>
