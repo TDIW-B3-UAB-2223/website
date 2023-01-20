@@ -5,6 +5,16 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
+        <ul class="nav">
+            <button>
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+            <li><a href="">El meu compte</a></li>
+			<li><a href="">Les meves compres</a></li>
+			<li><a href="">Tancar Sessio</a></li>
+        </ul>
         <h1>Productes</h1>
         <h3><?php echo $product['name'] ?> </h3>
         <p><?php echo $product['description'] ?> </p>
