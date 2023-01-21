@@ -135,4 +135,73 @@
         unset($result["password"]);
         return $result;
     }
+
+    public function createNewUser($name, $password, $email, $adress, $city, $postalCode) {
+        $sql = "INSERT INTO Usuari SET name=?, password=?, email=?, address=?, city=?, postalCode=?";
+        pg_prepare($this->conn, "createNewUser", $sql);
+        $queryResult = pg_execute(
+            $this->conn,
+            "createNewUser",
+            [$name, password_hash($password, PASSWORD_DEFAULT), $email, $adress, $city, $postalCode]
+        );
+        return pg_fetch_all($queryResult);
+    }
+
+    public function editUser($name, $password, $email, $adress, $city, $postalCode) {
+        $sql = "INSERT INTO Usuari SET name=?, password=?, email=?, address=?, city=?, postalCode=?";
+        pg_prepare($this->conn, "editUser", $sql);
+        $queryResult = pg_execute(
+            $this->conn,
+            "editUser",
+            [$name, password_hash($password, PASSWORD_DEFAULT), $email, $adress, $city, $postalCode]
+        );
+        return pg_fetch_all($queryResult);
+    }
+
+    public function createComanda(
+        string $comanda_id,
+        string $user_id,
+        string $total_cost,
+        string $date,
+        string $n_elements
+    ){
+        $sql = "INSERT INTO Comanda(comanda_id, user_id, total_cost, date, n_elements)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING ID;";
+        pg_prepare($this->conn, "createComanda", $sql);
+        $queryResult = pg_execute(
+            $this->conn,
+            "CreateComanda",
+            [$comanda_id, $user_id, $total_cost, $date, $n_elements]
+        );
+        return pg_fetch_all($queryResult);
+    }
+
+    public function getComanda($user_id, $date){
+        $queryResult = pg_execute($this->conn, "getComanda", [$user_id, $date]);
+        $result = pg_fetch_all($queryResult);
+        return $result;
+    }
+
+    public function getComandes($user_id): array{
+        if ($user_id  == null){
+            pg_prepare($this->conn, "getComandes", "SELECT * FROM Comanda;");
+            $queryResult = pg_execute($this->conn, "getComandes", []);
+        }else{
+            pg_prepare($this->conn, "getComandes", "SELECT * FROM Comanda WHERE user_id = '$user_id';");
+            $queryResult = pg_execute($this->conn, "getComandes", [$user_id]);
+        }
+        return pg_fetch_all($queryResult);
+    }
+
+    public function getProductsComanda($comanda_id): array{
+        if ($comanda_id  == null){
+            pg_prepare($this->conn, "getProductsComanda", "SELECT * FROM Comanda;");
+            $queryResult = pg_execute($this->conn, "getProductsComanda", []);
+        }else{
+            pg_prepare($this->conn, "getProductsComanda", "SELECT * FROM Comanda WHERE comanda_id = '$comanda_id';");
+            $queryResult = pg_execute($this->conn, "getProductsComanda", [$comanda_id]);
+        }
+        return pg_fetch_all($queryResult);
+    }
 }
+
