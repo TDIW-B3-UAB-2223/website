@@ -51,5 +51,6 @@
     </body>
     <footer>
         <script src="/js/dropdown.js"></script>
+        <script src="/js/validate.js"></script>
     </footer>
 </html>

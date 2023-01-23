@@ -124,12 +124,12 @@
         }
 
         public function createUser(
-            string $name,
-            string $pass,
-            string $email,
-            string $address,
-            string $city,
-            string $postalCode
+            $name,
+            $pass,
+            $email,
+            $address,
+            $city,
+            $postalCode
         ){
             $queryResult = pg_execute(
                 $this->conn,
@@ -168,10 +168,10 @@
          * @param int $elements An array of arrays, `[id = int, quantity = int]`
          */
         public function createOrder(
-            int $userId,
-            int $pricePaid,
-            array $elements = [],
-            DateTimeImmutable $date = new DateTimeImmutable(),
+            $userId,
+            $pricePaid,
+            $elements,
+            $date
         ){
             $queryResult = pg_execute(
                 $this->conn,
