@@ -1,4 +1,4 @@
 <?php
-    function saneEcho(string|null $output) {
+    function saneEcho($output) {
         echo htmlspecialchars($output ?? "", ENT_QUOTES, 'UTF-8');
     }

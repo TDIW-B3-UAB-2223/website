@@ -10,7 +10,7 @@
             return self::$instance;
         }
 
-        public function connect(string $server, int|null $port, string $user, string $pass, string $db) {
+        public function connect($server, $port, $user, $pass, $db) {
             $actualPort = $port ?? 5432;
     
             try {
@@ -94,7 +94,7 @@
             return pg_fetch_all($queryResult);
         }
 
-        public function getProducts(string|null $category): array {
+        public function getProducts($category): array {
             if ($category == null) {
                 $queryResult = pg_execute($this->conn, "getProducts", []);
             } else {
@@ -103,19 +103,19 @@
             return pg_fetch_all($queryResult);
         }
 
-        public function searchProducts(string $search): array {
+        public function searchProducts($search): array {
             $queryResult = pg_execute($this->conn, "searchProducts", ["%$search%"]);
             return pg_fetch_all($queryResult);
         }
 
-        public function getProduct(int $id): array {
+        public function getProduct($id): array {
             $queryResult = pg_execute($this->conn, "getProduct", [$id]);
             $result = pg_fetch_all($queryResult)[0];
             $result["price"] = $result["price"] / 100;
             return $result;
         }
 
-        public function getCategory(string $slug) {
+        public function getCategory($slug) {
             $queryResult = pg_execute($this->conn, "getCategory", [$slug]);
             if (pg_num_rows($queryResult) == 0) {
                 return null;
@@ -142,13 +142,13 @@
             return pg_fetch_all($queryResult)[0];
         }
 
-        public function getUser(string $mail) {
+        public function getUser($mail) {
             $queryResult = pg_execute($this->conn, "getUser", [$mail]);
             $result = pg_fetch_all($queryResult);
             return $result[0];
         }
 
-        public function getUserSafe(string $mail) {
+        public function getUserSafe($mail) {
             $queryResult = pg_execute($this->conn, "getUser", [$mail]);
             $result = pg_fetch_all($queryResult);
             unset($result["password"]);
@@ -206,7 +206,7 @@
             return $order;
         }
 
-        public function getOrdersByUser(string $userId) {
+        public function getOrdersByUser($userId) {
             $queryResult = pg_execute($this->conn, "getOrdersByUser", [$userId]);
             $orders = pg_fetch_all($queryResult);
             return array_map(function($order) {
