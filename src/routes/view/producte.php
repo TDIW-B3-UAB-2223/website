@@ -1,29 +1,12 @@
-<html lang=cat>
-    <head>
-        <meta charset = "UTF-8" />
-        <title><?php echo $product["name"]?></title>
-        <link rel="stylesheet" href="css/style.css" />
-    </head>
-    <body>
-        <ul class="nav">
-            <button>
-                <div></div>
-                <div></div>
-                <div></div>
-            </button>
-            <li><a href="">El meu compte</a></li>
-			<li><a href="">Les meves compres</a></li>
-			<li><a href="">Tancar Sessio</a></li>
-        </ul>
-        <h1>Productes</h1>
-        <h3><?php echo $product['name'] ?> </h3>
-        <p><?php echo $product['description'] ?> </p>
-        <p><?php if ( isset($product["image"]) ): ?>
-           <img src="<?php echo $product["image"] ?>" alt="<?php echo $product["name"]?>" height=300></img>
-        <?php endif ?></p>
-        <p><?php echo $product['price'] ?> </p>
-        <input type="number">
-        <input type="button" value="Afegir al cabas">
-
-    </body>
-</html>
+<h1>Producte</h1>
+<p><?php if ( isset($model["product"]["image"]) ): ?>
+    <img src="<?php saneEcho($product["image"]) ?>" alt="<?php saneEcho($product["name"])?>" height=300></img>
+<?php endif ?></p>
+<h3><?php saneEcho($model["product"]['name']) ?> </h3>
+<p><?php saneEcho($model["product"]['description']) ?> </p>
+<p>€<?php saneEcho($model["product"]['price']) ?> </p>
+<form action="/afegir_carret_post.php" method="post">
+    <input type="hidden" name="product" value="<?php saneEcho($model["product"]['id']) ?>">
+    <input type="number" name="quantity" value="1" min="1" max="100">
+    <input type="submit" value="Afegir al carret">
+</form>

@@ -1,16 +1,30 @@
 <?php
     $id = $_GET["categoria"];
     if ( !isset($id) ) {
-        header("Location: index.php?accio=404");
+        $model = populate_model([
+            "title" => "Categoria no trobada",
+            "error" => "Categoria no trobada",
+            "message" => "No vas demanar ninguna categoria.",
+        ]);
+        render("error.php");
         exit();
     }
     $categoria = $database->getCategory($id);
     if ( $categoria == null ) {
-        header("Location: index.php?accio=404");
+        $model = populate_model([
+            "title" => "Categoria no trobada",
+            "error" => "Categoria no trobada",
+            "message" => "La categoria que has demanat no existeix.",
+        ]);
+        render("error.php");
         exit();
     }
 
-    $categories = $database->getCategories($id);
     $products = $database->getProducts($id);
-
-    require_once('routes' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'categoria.php');
+    
+    $model = populate_model([
+        "title" => $categoria["name"],
+        "categoria" => $categoria,
+        "products" => $products,
+    ]);
+    render("categoria.php");

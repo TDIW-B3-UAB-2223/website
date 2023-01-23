@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang=cat>
-    <head>
-        <meta charset = "UTF-8" />
-        <title>Portada</title>
-        <link rel="stylesheet" href="resources/css/style.css" />
-    </head>
-    <body>
-        <h1>Benvingut a la pàgina principal</h1>
-        <p>En aquesta pàgina es mostra la informació principal de la web.</p>
-    </body>
-</html>
+<?php
+    $model = populate_model([
+        "title" => "Negoci de Instruments Musicals",
+        "categoria" => ["name" => "Negoci de Instruments Musicals"],
+        "products" => $database->getProducts(null)
+    ]);
+    render("categoria.php");

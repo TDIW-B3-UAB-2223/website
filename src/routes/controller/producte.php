@@ -1,14 +1,28 @@
 <?php
   $id = $_GET["producte"];
   if ( !isset($id) ) {
-    header("Location: index.php?accio=404");
+    $model = populate_model([
+      "title" => "Producte no trobat",
+      "error" => "Producte no trobat",
+      "message" => "No vas demanar ningun producte.",
+    ]);
+    render("error.php");
     exit();
   }
-
   $product = $database->getProduct($id);
   if ( $product == null ) {
-    header("Location: index.php?accio=404");
+    $model = populate_model([
+      "title" => "Producte no trobat",
+      "error" => "Producte no trobat",
+      "message" => "El producte que has demanat no existeix.",
+    ]);
+    render("error.php");
     exit();
   }
 
-  require_once('routes' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'producte.php');
+  $model = populate_model([
+    "title" => $product["name"],
+    "product" => $product,
+  ]);
+  
+  render("producte.php");
